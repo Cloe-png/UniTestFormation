@@ -1,0 +1,77 @@
+package org.example;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+
+class testTriEtudiants {
+
+    private Formation formation;
+    private Etudiant etudiantA;
+    private Etudiant etudiantB;
+    private Etudiant etudiantC;
+
+    @BeforeEach
+    void setUp() {
+        formation = new Formation("BTS SIO");
+
+        etudiantB = new Etudiant("B", "Etudiant", "E002") {
+            @Override
+            public double calculerMoyenne() {
+                return 8.0;
+            }
+        };
+
+        etudiantA = new Etudiant("A", "Etudiant", "E001") {
+            @Override
+            public double calculerMoyenne() {
+                return 12.0;
+            }
+        };
+
+        etudiantC = new Etudiant("C", "Etudiant", "E003") {
+            @Override
+            public double calculerMoyenne() {
+                return 15.0;
+            }
+        };
+    }
+
+    @Test
+    void testTriEtudiants_ParNom() {
+        formation.ajouterEtudiant(etudiantB);
+        formation.ajouterEtudiant(etudiantC);
+        formation.ajouterEtudiant(etudiantA);
+
+        formation.trierLesEtudiants("alpha");
+
+        List<Etudiant> etudiantsTries = formation.getLesEtudiants();
+        assertEquals("A", etudiantsTries.get(0).getNom(), "Le premier étudiant doit être 'A'.");
+        assertEquals("B", etudiantsTries.get(1).getNom(), "Le deuxième étudiant doit être 'B'.");
+        assertEquals("C", etudiantsTries.get(2).getNom(), "Le troisième étudiant doit être 'C'.");
+    }
+
+    @Test
+    void testTriEtudiants_ParMoyenne() {
+        formation.ajouterEtudiant(etudiantB);
+        formation.ajouterEtudiant(etudiantC);
+        formation.ajouterEtudiant(etudiantA);
+
+        formation.trierLesEtudiants("classement");
+
+        List<Etudiant> etudiantsTries = formation.getLesEtudiants();
+        assertEquals(15.0, etudiantsTries.get(0).calculerMoyenne(), 0.01, "Le premier étudiant doit avoir la moyenne la plus élevée (15.0).");
+        assertEquals(12.0, etudiantsTries.get(1).calculerMoyenne(), 0.01, "Le deuxième étudiant doit avoir la moyenne 12.0.");
+        assertEquals(8.0, etudiantsTries.get(2).calculerMoyenne(), 0.01, "Le troisième étudiant doit avoir la moyenne 8.0.");
+    }
+
+    @Test
+    void testTriEtudiants_CritereInvalide() {
+        formation.ajouterEtudiant(etudiantA);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            formation.trierLesEtudiants("invalide");
+        }, "Un critère invalide doit lever une exception.");
+    }
+}
