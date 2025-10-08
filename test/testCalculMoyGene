@@ -1,0 +1,50 @@
+package org.example;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.*;
+
+class testCalculMoyGene {
+
+        private Formation formation;
+        private Etudiant etudiant1;
+        private Etudiant etudiant2;
+        private Etudiant etudiant3;
+
+        @BeforeEach
+        void setUp() {
+            formation = new Formation("BTS SIO");
+
+            etudiant1 = new Etudiant("Dupont", "Jean", "E001") {
+                @Override
+                public double calculerMoyenne() {
+                    return 12.0;
+                }
+            };
+
+            etudiant2 = new Etudiant("Martin", "Pierre", "E002") {
+                @Override
+                public double calculerMoyenne() {
+                    return 8.0;
+                }
+            };
+
+            etudiant3 = new Etudiant("Durand", "Marie", "E003") {
+                @Override
+                public double calculerMoyenne() {
+                    return 15.0;
+                }
+            };
+        }
+
+        @Test
+        void testCalculMoyGene() {
+            formation.ajouterEtudiant(etudiant1);
+            formation.ajouterEtudiant(etudiant2);
+            formation.ajouterEtudiant(etudiant3);
+
+            double moyenneGenerale = formation.calculerMoyenneGenerale();
+
+            assertEquals(11.666, moyenneGenerale, 0.01, "La moyenne générale doit être environ 11.67.");
+        }
+    }
