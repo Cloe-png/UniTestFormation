@@ -1,79 +1,62 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Enseignement {
-    private boolean facultatif;
-    private Matiere laMatiere;
-    private Prof leProf;
-    private List<Etudiant> lesEtudiants;
-    private Formation laFormation;
-    private Evaluation lesEvaluations;
+public class Etudiant extends Personne {
+    private String code;
+    private Formation laFormationSuivie;
+    private List<Evaluation> evaluations; // Liste des évaluations de l'étudiant
 
-    public Enseignement(boolean facultatif, Matiere laMatiere, Prof leProf, Formation laFormation) {
-        this.facultatif = facultatif;
-        this.laMatiere = laMatiere;
-        this.leProf = leProf;
-        this.laFormation = laFormation;
+    public Etudiant(String nom, String prenom, String code) {
+        super(nom, prenom);
+        this.code = code;
+        this.evaluations = new ArrayList<>(); // Initialisation de la liste
     }
 
-    public Enseignement() {
+    public String getCode() {
+        return code;
     }
 
-    public boolean isFacultatif() {
-        return facultatif;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public void setFacultatif(boolean facultatif) {
-        this.facultatif = facultatif;
+    public Formation getLaFormationSuivie() {
+        return laFormationSuivie;
     }
 
-    public List<Etudiant> getLesEtudiants() {
-        return lesEtudiants;
+    public void setLaFormationSuivie(Formation laFormationSuivie) {
+        this.laFormationSuivie = laFormationSuivie;
     }
 
-    public void setLesEtudiants(List<Etudiant> lesEtudiants) {
-        this.lesEtudiants = lesEtudiants;
+    // Getter et setter pour les évaluations
+    public List<Evaluation> getEvaluations() {
+        return evaluations;
     }
 
-    public Matiere getLaMatiere() {
-        return laMatiere;
+    public void setEvaluations(List<Evaluation> evaluations) {
+        this.evaluations = evaluations;
     }
 
-    public void setLaMatiere(Matiere laMatiere) {
-        this.laMatiere = laMatiere;
-    }
 
-    public Prof getLeProf() {
-        return leProf;
-    }
+    public double calculerMoyenne() {
+        if (evaluations == null || evaluations.isEmpty()) {
+            return 0.0;
+        }
 
-    public void setLeProf(Prof leProf) {
-        this.leProf = leProf;
-    }
+        double sommeNotes = 0.0;
+        int sommeCoefficients = 0;
 
-    public Formation getLaFormation() {
-        return laFormation;
-    }
+        for (Evaluation eval : evaluations) {
+            sommeNotes += eval.getLaNote() * eval.getLeCoeff();
+            sommeCoefficients += eval.getLeCoeff();
+        }
 
-    public void setLaFormation(Formation laFormation) {
-        this.laFormation = laFormation;
-    }
+        if (sommeCoefficients == 0) {
+            return 0.0;
+        }
 
-    public Evaluation getLesEvaluations() {
-        return lesEvaluations;
-    }
-
-    public void setLesEvaluations(Evaluation lesEvaluations) {
-        this.lesEvaluations = lesEvaluations;
-    }
-
-    /**
-     * Ajoute une évaluation d'un étudiant dans une matière donnée
-     * @param eval L'évaluation à ajouter
-     */
-    public void ajouterEvaluation(Evaluation eval) {
-        // À implémenter
+        return sommeNotes / sommeCoefficients;
     }
 }
-
