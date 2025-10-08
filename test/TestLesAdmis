@@ -1,0 +1,51 @@
+package org.example;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.util.List;
+
+class testLesAdmis {
+    private Formation formation;
+    private Etudiant etudiant1;
+    private Etudiant etudiant2;
+    private Etudiant etudiant3;
+
+    @BeforeEach
+    void setUp() {
+        formation = new Formation("BTS SIO");
+        etudiant1 = new Etudiant("Dupont", "Jean", "E001") {
+            @Override
+            public double calculerMoyenne() {
+                return 12.0;
+            }
+        };
+        etudiant2 = new Etudiant("Martin", "Pierre", "E002") {
+            @Override
+            public double calculerMoyenne() {
+                return 8.0;
+            }
+        };
+        etudiant3 = new Etudiant("Durand", "Marie", "E003") {
+            @Override
+            public double calculerMoyenne() {
+                return 15.0;
+            }
+        };
+    }
+
+    @Test
+    void testLesAdmis() {
+        formation.ajouterEtudiant(etudiant1);
+        formation.ajouterEtudiant(etudiant2);
+        formation.ajouterEtudiant(etudiant3);
+
+        List<Etudiant> admis = formation.lesAdmis();
+
+
+        assertEquals(2, admis.size(), "La liste des admis doit contenir 2 étudiants.");
+        assertTrue(admis.contains(etudiant1), () -> "L'étudiant " + etudiant1.getNom() + " (moyenne=12) doit être admis.");
+        assertTrue(admis.contains(etudiant3), () -> "L'étudiant " + etudiant3.getNom() + " (moyenne=15) doit être admis.");
+        assertFalse(admis.contains(etudiant2), () -> "L'étudiant " + etudiant2.getNom() + " (moyenne=8) ne doit pas être admis.");
+    }
+}
