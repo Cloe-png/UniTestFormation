@@ -1,0 +1,35 @@
+package org.example;
+
+import java.util.List;
+
+public class Matiere {
+    private String nom;
+    private List<Prof> lesProfsHabilites;
+
+    public Matiere(String nom) {
+        this.setNom(nom);
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public List<Prof> getLesProfsHabilites() {
+        return lesProfsHabilites;
+    }
+
+    public void setLesProfsHabilites(List<Prof> lesProfsHabilites) {
+        this.lesProfsHabilites = lesProfsHabilites;
+    }
+
+    /**
+     * Ajoute un professeur habilité pour cette matière
+     */
+    public void ajouterProfHabilite() {
+        // À implémenter
+    }
+}
