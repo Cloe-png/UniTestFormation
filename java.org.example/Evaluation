@@ -1,0 +1,47 @@
+package org.example;
+
+public class Evaluation {
+    private Etudiant lEtudiant;
+    private Matiere laMatiere;
+    private double laNote;
+    private int leCoeff;
+
+    public Evaluation(Etudiant lEtudiant, Matiere laMatiere, double laNote, int leCoeff) {
+        this.lEtudiant = lEtudiant;
+        this.laMatiere = laMatiere;
+        this.laNote = laNote;
+        this.leCoeff = leCoeff;
+    }
+
+    public Etudiant getLEtudiant() {
+        return lEtudiant;
+    }
+
+    public void setLEtudiant(Etudiant lEtudiant) {
+        this.lEtudiant = lEtudiant;
+    }
+
+    public double getLaNote() {
+        return laNote;
+    }
+
+    public void setLaNote(double laNote) {
+        this.laNote = laNote;
+    }
+
+    public int getLeCoeff() {
+        return leCoeff;
+    }
+
+    public void setLeCoeff(int leCoeff) {
+        this.leCoeff = leCoeff;
+    }
+
+    public Matiere getLaMatiere() {
+        return laMatiere;
+    }
+
+    public void setLaMatiere(Matiere laMatiere) {
+        this.laMatiere = laMatiere;
+    }
+}
