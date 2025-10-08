@@ -1,0 +1,89 @@
+package org.example;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class Formation {
+    private String nom;
+    private List<Etudiant> lesEtudiants;
+    private List<Enseignement> lesEnseignements;
+
+    public Formation(String nom) {
+        this.nom = nom;
+        this.lesEtudiants = new ArrayList<>();
+        this.lesEnseignements = new ArrayList<>();
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public List<Etudiant> getLesEtudiants() {
+        return lesEtudiants;
+    }
+
+    public void setLesEtudiants(List<Etudiant> lesEtudiants) {
+        this.lesEtudiants = lesEtudiants;
+    }
+
+    public List<Enseignement> getLesEnseignements() {
+        return lesEnseignements;
+    }
+
+    public void setLesEnseignements(List<Enseignement> lesEnseignements) {
+        this.lesEnseignements = lesEnseignements;
+    }
+
+    public void ajouterEtudiant(Etudiant et) {
+        if (et == null) return;
+        if (lesEtudiants == null) lesEtudiants = new ArrayList<>();
+
+        lesEtudiants.add(et);
+    }
+
+    public List<Etudiant> lesAdmis() {
+        List<Etudiant> admis = new ArrayList<>();
+        if (lesEtudiants == null) return admis;
+
+        for (Etudiant e : lesEtudiants) {
+            if (e.calculerMoyenne() >= 10.0) {
+                admis.add(e);
+            }
+        }
+        return admis;
+    }
+
+    public void trierLesEtudiants(String critere) {
+        if (lesEtudiants == null || lesEtudiants.isEmpty()) {
+            return;
+        }
+
+        if (!critere.equalsIgnoreCase("alpha") && !critere.equalsIgnoreCase("classement")) {
+            throw new IllegalArgumentException("Critère de tri invalide. Utilisez 'alpha' ou 'classement'.");
+        }
+
+        if (critere.equalsIgnoreCase("alpha")) {
+            Collections.sort(lesEtudiants, Comparator.comparing(Etudiant::getNom));
+        } else {
+            Collections.sort(lesEtudiants, (e1, e2) -> Double.compare(e2.calculerMoyenne(), e1.calculerMoyenne()));
+        }
+    }
+
+
+    public double calculerMoyenneGenerale() {
+        if (lesEtudiants == null || lesEtudiants.isEmpty()) return 0.0;
+
+        double total = 0;
+        for (Etudiant e : lesEtudiants) {
+            total += e.calculerMoyenne();
+        }
+
+        return total / lesEtudiants.size();
+    }
+}
