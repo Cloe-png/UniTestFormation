@@ -1,0 +1,35 @@
+package org.example;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+
+class FormationTest {
+
+    private Formation formation;
+    private Etudiant etudiant1;
+    private Etudiant etudiant2;
+
+    @BeforeEach
+    void setUp() {
+        formation = new Formation("BTS SIO");
+
+        etudiant1 = new Etudiant("Dupont", "Jean", "E001");
+        etudiant2 = new Etudiant("Martin", "Pierre", "E002");
+    }
+
+    @Test
+    void testAjoutEtudiant() {
+        formation.ajouterEtudiant(etudiant1);
+
+        List<Etudiant> etudiants = formation.getLesEtudiants();
+        assertEquals(1, etudiants.size(), "La liste des étudiants doit contenir 1 élément.");
+
+        assertSame(etudiant1, etudiants.get(0), "L'étudiant récupéré doit être le même que celui ajouté.");
+
+        formation.ajouterEtudiant(etudiant2);
+        assertEquals(2, formation.getLesEtudiants().size(), "La liste des étudiants doit contenir 2 éléments.");
+        assertSame(etudiant2, formation.getLesEtudiants().get(1), "Le deuxième étudiant récupéré doit être le même que celui ajouté.");
+    }
+}
