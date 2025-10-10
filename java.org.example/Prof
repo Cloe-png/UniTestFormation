@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Prof extends Personne {
     private String status;
@@ -27,11 +28,16 @@ public class Prof extends Personne {
         this.lesEnseignements = lesEnseignements;
     }
 
-    /**
-     * Ajoute un enseignement au professeur
-     * @param ens L'enseignement à ajouter
-     */
     public void ajouterEnseignement(Enseignement ens) {
-        // À implémenter
+        if (ens == null) {
+            throw new IllegalArgumentException("L'enseignement ne peut pas être null.");
+        }
+
+        if (lesEnseignements == null) {
+            lesEnseignements = new ArrayList<>();
+        }
+
+        lesEnseignements.add(ens);
     }
 }
+
